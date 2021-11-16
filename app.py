@@ -1,8 +1,8 @@
 import random
 from math import floor, log
-from util import execute, generate
-from grover import grover
-from oracle import oracle
+from lib.util import execute, generate
+from lib.grover import grover
+from lib.oracle import oracle
 
 def init(target, n):
     # Initialize an array of random letters, including the target ones in the string.

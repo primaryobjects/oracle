@@ -15,7 +15,7 @@ def generate(n):
 def execute(qc):
     # Setup the API key for the real quantum computer.
     parser = RawConfigParser()
-    parser.read('config.ini')
+    parser.read('config/config.ini')
 
     # Read configuration values.
     proxies = ast.literal_eval(parser.get('IBM', 'proxies')) if parser.has_option('IBM', 'proxies') else None
