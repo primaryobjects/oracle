@@ -84,6 +84,8 @@ def logic(arr, target, n):
     return prog
 
 def main(phrase, qubits):
+    execute.provider = None
+
     bits = 2 ** qubits
     arr = init(phrase, bits)
 

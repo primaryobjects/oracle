@@ -24,8 +24,8 @@ def execute(qc):
 
     is_sim = token == 'YOUR_API_KEY'
     if not is_sim:
-        provider = IBMQ.enable_account(token = token, proxies = proxies, verify = verify)
-        backend = provider.backends(simulator=False)[1]
+        execute.provider = execute.provider or IBMQ.enable_account(token = token, proxies = proxies, verify = verify)
+        backend = execute.provider.backends(simulator=False)[1]
     else:
         backend = Aer.get_backend('aer_simulator')
 
