@@ -1,0 +1,8 @@
+// Workspace settings
+{
+    // The following will hide in the editor
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*/*.zip": true
+    },
+}
