@@ -192,3 +192,47 @@ l (at index 0 [000])
 l (at index 0 [000])
 o (at index 3 [011])
 ```
+
+## Does this really work for long sentences with lots of qubits?
+
+It sure does *(on the simulator!)*.
+
+```text
+5 qubits, 32 possibilites
+
+Random letters:
+['h', ' ', 'l', 'w', 'o', 'a', ' ', 'l', 't', 's', '!', 'o', ' ', 'l', 'y', 'h', 'l', 'd', 'r', 's', ' ', 'l', 'r', 'e', 'l', 'e', 'c', ' ', 'i', 'o', 'o', 'i']
+Final result from the quantum circuit:
+h (at index 15 [01111])
+e (at index 25 [11001])
+l (at index 2 [00010])
+l (at index 21 [10101])
+o (at index 11 [01011])
+  (at index 20 [10100])
+w (at index 3 [00011])
+o (at index 11 [01011])
+r (at index 18 [10010])
+l (at index 24 [11000])
+d (at index 17 [10001])
+  (at index 1 [00001])
+t (at index 8 [01000])
+h (at index 0 [00000])
+i (at index 28 [11100])
+s (at index 19 [10011])
+  (at index 27 [11011])
+i (at index 28 [11100])
+s (at index 9 [01001])
+  (at index 27 [11011])
+r (at index 22 [10110])
+e (at index 23 [10111])
+a (at index 5 [00101])
+l (at index 7 [00111])
+l (at index 13 [01101])
+y (at index 14 [01110])
+  (at index 12 [01100])
+c (at index 26 [11010])
+o (at index 30 [11110])
+o (at index 29 [11101])
+l (at index 21 [10101])
+! (at index 10 [01010])
+```
