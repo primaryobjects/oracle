@@ -99,16 +99,19 @@ Consider the target word "hello" which consists of 5 letters. We can estimate th
 
 Of course, we can also calculate the required number of qubits. Since our target phrase is 5 letters, we can try calculating the logarithm of 5 in base 2 (for binary). Thus, `log(5, 2) = 2.3`. If we take the ceiling value of this result, we can determine the number of qubits!
 
+#### Calculating the number of qubits from letters
+
 For 5 letters, `ceil(log(5, 2)) = 3` qubits (`111 = 0 to 7 = 8` possible values)
+
 For 9 letters, `ceil(log(9, 2)) = 4` qubits
+
 For 15 letters, `ceil(log(16, 2)) = 4` qubits (`1111 = 0 to 15 = 16` possible values)
+
 For 16 letters, `ceil(log(17, 2)) = 5` qubits (`11111 = 0 to 31 = 32` possible values)
+
 For 33 letters, `ceil(log(33, 2)) = 6` qubits
+
 etc.
-
-
-
-
 
 ## Output
 
