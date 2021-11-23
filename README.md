@@ -2,6 +2,19 @@
 
 A quantum computing program that can print "Hello World!"
 
+```text
+Random letters:
+['l', 'h', 'Q', 'o', 'l', 'Q', 'C', 'e']
+
+Final result from the quantum circuit:
+
+h (at index 1 [001])
+e (at index 7 [111])
+l (at index 0 [000])
+l (at index 0 [000])
+o (at index 3 [011])
+```
+
 ## What is it?
 
 Quantum Computing ABC is a tutorial example of writing a quantum computing program in Qiskit that searches through a random array of letters in order to find each letter in sequence for a target sentence, such as "Hello World!".
@@ -39,3 +52,83 @@ On a quantum computer, we can represent each index within the array using enough
 In simplified terms, a quantum computer can effectively search through all possibilites of qubit values in a single CPU cycle.
 
 Imagine the 3 qubits in this example 000, 001, 010, 011, etc. being searched simulataneously for the target letter. In this manner, a single CPU cycle on a quantum computer can look in the array at each possible index and determine if the letter is located at that slot. After just 1 cycle, we can return the index `011=3` for the letter 'h'. Likewise, in a single cycle, we can locate the letter 'l' at the last index of `111=7`.
+
+## Output
+
+```text
+3 qubits, 8 possibilites
+Using random letters:
+['l', 'h', 'Q', 'o', 'l', 'Q', 'C', 'e']
+
+Finding letter 'h'
+
+q_0: ──■──
+       │
+q_1: ──o──
+       │
+q_2: ──o──
+     ┌─┴─┐
+q_3: ┤ X ├
+     └───┘
+{'010': 27, '001': 795, '101': 28, '100': 35, '110': 36, '011': 39, '000': 33, '111': 31}
+h
+Finding letter 'e'
+
+q_0: ──■──
+       │
+q_1: ──■──
+       │
+q_2: ──■──
+     ┌─┴─┐
+q_3: ┤ X ├
+     └───┘
+{'101': 29, '010': 31, '000': 26, '111': 813, '011': 35, '110': 38, '100': 25, '001': 27}
+e
+Finding letter 'l'
+
+q_0: ──o──
+       │
+q_1: ──o──
+       │
+q_2: ──┼──
+     ┌─┴─┐
+q_3: ┤ X ├
+     └───┘
+{'000': 520, '100': 504}
+l
+Finding letter 'l'
+
+q_0: ──o──
+       │
+q_1: ──o──
+       │
+q_2: ──┼──
+     ┌─┴─┐
+q_3: ┤ X ├
+     └───┘
+{'100': 504, '000': 520}
+l
+Finding letter 'o'
+
+q_0: ──■──
+       │
+q_1: ──■──
+       │
+q_2: ──o──
+     ┌─┴─┐
+q_3: ┤ X ├
+     └───┘
+{'001': 27, '101': 33, '010': 31, '011': 800, '111': 34, '000': 36, '110': 33, '100': 30}
+o
+
+Random letters:
+['l', 'h', 'Q', 'o', 'l', 'Q', 'C', 'e']
+
+Final result from the quantum circuit:
+
+h (at index 1 [001])
+e (at index 7 [111])
+l (at index 0 [000])
+l (at index 0 [000])
+o (at index 3 [011])
+```
