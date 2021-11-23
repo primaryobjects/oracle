@@ -85,12 +85,20 @@ Consider the following array of random letters that we want to search through to
 
 The length of this array is 8 and can thus be represented using 3 qubits, since `2^3=8`. This means we can get 8 different combinations of values for those qubits, which correspond to all possible indices in the array.
 
-Imagine that when the quantum program runs, it simulataneously evaluates all possible combinations of qubits, calling the oracle for each one, and getting back an indication of which combination is a valid solution. For the letter 'h' the only solution is at index `2` or `010`. For the letter 'l', we have two solutions at index `6 (110)` and `7 (111)`. The oracle would return a "high" result for both indices in the solution, thus resulting in two solutions when the quantum circuit runs for the letter 'l'.
+Imagine that when the quantum program runs, it simulataneously evaluates all possible combinations of qubits, calling the oracle for each one, and getting back an indication of which combination is a valid solution. For the letter 'h' the only solution is at index `2` or `010`.
 
 ```text
 Index of 'h' = 2
 Binary value = 010
 Qubit mapping = q3=0 q2=1 q1=0
+```
+
+For the letter 'l', we have two solutions at index `6 (110)` and `7 (111)`. The oracle would return a "high" result for both indices in the solution, thus resulting in two solutions when the quantum circuit runs for the letter 'l'.
+
+```text
+Index of 'l' = [6,7]
+Binary value = [110, 111]
+Qubit mapping = [[q3=1 q2=1 q1=0], [q3=1 q2=1 q1=1]]
 ```
 
 For each letter in the target phrase, we configure the oracle as described above, and run the quantum circuit for one cycle. We then measure the outcomes from each possible combination of qubit values. The maximum count result will be our target index. For the case of 'h', we would expect to see low measurement counts for all 3-bit values except for `010`, corresponding to index `2` and the letter 'h'.
