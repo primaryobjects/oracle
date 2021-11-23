@@ -25,11 +25,13 @@ The idea is similar to the traditional [ransom](https://leetcode.com/problems/ra
 
 ## Why would you use a quantum computer for this?
 
-On a quantum computer, we can leverage [Grover's search](https://en.wikipedia.org/wiki/Grover%27s_algorithm) algorithm in order to locate the target letter indices within the random array and select them for printing next in the sentence. This provides a [quadratic](https://www.quora.com/When-people-say-a-quantum-computer-gains-a-quadratic-speedup-for-search-algorithms-does-that-mean-the-complexity-is-square-rooted-i-e-sqrt-n) speedup in time complexity to find the solution!
+To demonstrate the power of a quantum computer compared to a classical one, of course!
 
-On a classical computer, the time complexity for searching through an unordered list of elements would take O(n). That is, the worst case would be to iterate through the entire array, if the last element in the array is the target letter.
+On a classical computer, the time complexity for searching through an unordered list of elements would take O(n). That is, in the worst case we would need to iterate through the entire array in order to locate a target element - if the last element in the array is the target.
 
-By contrast, a quantum computer using Grover's algorithm can locate the target element in O(sqrt(n)). It does this by representing each bit in the length of the array with a qubit. For example, for a random array of length 8, we can represent this on a quantum computer using 3 qubits which gives us 2^3=8 possible combinations.
+By contrast, a quantum computer using Grover's [algorithm](https://en.wikipedia.org/wiki/Grover%27s_algorithm) can locate the target element in O(sqrt(n)). This provides a [quadratic](https://www.quora.com/When-people-say-a-quantum-computer-gains-a-quadratic-speedup-for-search-algorithms-does-that-mean-the-complexity-is-square-rooted-i-e-sqrt-n) speed-up in time complexity to find the target element. A quantum computer does this by representing each bit in the length of the array with a qubit. For example, for a random array of length 8, we can represent this on a quantum computer using 3 qubits, which gives us 2^3=8 possible combinations. Since a quantum computer can calculate all possible values for qubits within a quantum circuit in a single cycle, the program can evaluate all potential indices in the array in order to locate the target element.
+
+While the example in this tutorial of selecting letters from an array of random elements is simplistic, it nevertheless demonstrates the speed-up in time complexity for searching and locating the desired elements.
 
 ## An Example
 
@@ -47,6 +49,10 @@ Length = 8
 
 On a classical computer, we would iterate through the array in order to search for each letter. For the first letter, 'h', we search up to index `3` to locate the letter. However, for letter 'l' we need to search through the entire array to locate the letter at index `7`. In the worst-case scenario, this algorithm requires searching through all elements, thus it has a time complexity of O(n).
 
+For an entire phrase, "hello", we could leverage a hash map to store the indices of the elements within the array. This would take O(n) to create the hash map of indices. We could then iterate through each letter in the target string and retrieve each index. This would take an additional O(m), where m = length of the phrase (5), as each lookup in the hash is a single execution of O(1).
+
+This would be a total time complexity of O(n+m) => O(n).
+
 ### Running on a quantum computer
 
 On a quantum computer, we can represent each index within the array using enough qubits to represent the length of the array. In this example, we have an array of length 8, thus we can represent this number of indices in the array using 3 qubits. This is equivalent to `2^3=8` possibilities for 3 qubits.
@@ -55,15 +61,19 @@ In simplified terms, a quantum computer can effectively search through all possi
 
 Imagine the 3 qubits in this example 000, 001, 010, 011, etc. being searched simulataneously for the target letter. In this manner, a single CPU cycle on a quantum computer can look in the array at each possible index and determine if the letter is located at that slot. After just 1 cycle, we can return the index `011=3` for the letter 'h'. Likewise, in a single cycle, we can locate the letter 'l' at the last index of `111=7`.
 
+This solution has a time complexity of O(sqrt(n)). For the entire phrase, "hello", we iterate across each letter in the target phrase (5 times in total) to execute the quantum circuit for a single CPU cycle. This would take an additional O(m), where m = length of the phrase (5).
+
+This would be a total time complexity of O(sqrt(n)+m) => O(sqrt(n)).
+
 ## Creating the Oracle
 
 [Grover's algorithm](https://qiskit.org/textbook/ch-algorithms/grover.html) on a quantum computer works by using an [oracle](https://qiskit.org/textbook/ch-algorithms/grover.html#Creating-an-Oracle).
 
 An oracle is a black-box mechanism that indicates to the quantum program circuit when a correct solution has been found. Without an oracle, the quantum computing algorithm would have no means of determining when it has located the correct letter in the sequence for the target phrase.
 
-An oracle can consist of logic that determines a solution state, given the values for the qubits being evaluated, or it can simply *give* the solution state (as seen in this tutorial). Consider an example of simplified Sudoku, where a unique number must exist within a row or column with no duplicated number in that row or column. We could design an oracle using logic for this problem by representing clauses for the logic using qubits. Since each combination of qubit values can represent a different combination of clauses, we can determine when a satisfactory solution is associated with those clauses (in that no duplicated number exists in the same row or column) and thus those qubit values become a solution.
+An oracle can consist of logic that determines a solution state, given the values for the qubits being evaluated, or it can simply *give* the solution state (as seen in this tutorial). Consider an example of [simplified Sudoku](https://qiskit.org/textbook/ch-algorithms/grover.html#sudoku), where a unique number must exist within a row or column with no duplicate. We could design an oracle using logic for this problem by representing clauses for the logic using qubits. Since each combination of qubit values can represent a different combination of clauses, we can determine when a satisfactory solution is associated with those clauses (in that no duplicated number exists in the same row or column) and thus those qubit values become a solution.
 
-The oracle used in this tutorial is a very simplistic one. Rather than using a logical set of clauses, we're simply returning the target index for the desired letter and giving that directly to the oracle. The quantum circuit will still execute a full search and use the oracle to determine which combination of qubits is a valid solution. This allows us to more easily see how to construct an oracle for a quantum computer.
+The oracle used in this tutorial is a very simplistic one. Rather than using a logical set of clauses, we'll have the oracle simply return the target index for the desired letter. The quantum circuit will still execute a full search and use the oracle to determine which combination of qubits is a valid solution. This allows us to more easily see how to construct an oracle for a quantum computer.
 
 Let's take a quick look at how we map qubits to indices within the array.
 
