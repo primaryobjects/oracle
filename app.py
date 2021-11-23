@@ -1,5 +1,5 @@
 import random
-from math import floor, log
+from math import ceil, floor, log
 from lib.util import execute, generate
 from lib.grover import grover
 from lib.oracle import oracle
@@ -83,8 +83,11 @@ def logic(arr, target, n):
 
     return prog
 
-def main(phrase, qubits):
+def main(phrase):
     execute.provider = None
+
+    # Calculate the number of qubits needed to represent the number of letters in the target.
+    qubits = ceil(log(len(phrase), 2))
 
     bits = 2 ** qubits
     arr = init(phrase, bits)
@@ -113,7 +116,7 @@ def main(phrase, qubits):
         print(counts)
 
         # Find the most frequent hit count.
-        key = counts.most_frequent()
+        key = max(counts, key=counts.get)
 
         # Since the quantum computer returns a binary string (one bit for each qubit), we need to convert it to an integer.
         index = int(key, 2)
@@ -134,4 +137,4 @@ def main(phrase, qubits):
 
         print(letter + ' (at index ' + str(index) + ' [' + binary + '])')
 
-main('hello', 3)
+main('hello')
