@@ -101,9 +101,9 @@ Binary value = [110, 111]
 Qubit mapping = [[q3=1 q2=1 q1=0], [q3=1 q2=1 q1=1]]
 ```
 
-For each letter in the target phrase, we configure the oracle as described above, and run the quantum circuit for one cycle. We then measure the outcomes from each possible combination of qubit values. The maximum count result will be our target index. For the case of 'h', we would expect to see low measurement counts for all 3-bit values except for `010`, corresponding to index `2` and the letter 'h'.
+For each letter in the target phrase, we configure the oracle as described above, and run the quantum circuit for one iteration. We then measure the outcomes from each possible combination of qubit values. The maximum count result will be our target index. For the case of 'h', we would expect to see low measurement counts for all 3-bit values except for `010`, corresponding to index `2` and the letter 'h'.
 
-We repeat this process for each letter in the target string. For the word "hello" we run a quantum circuit 5 times. On a classical computer this would require `5*8=40` CPU cycles - a time complexity of O(n) or 8 indices in the array to search across multiplied by 5 letters in our target phrase. However, on a quantum computer this would require `5*1=5` CPU cycles - a single CPU cycle for executing the quantum circuit multiplied by 5 letters in our target phrase.
+We repeat this process for each letter in the target string. For the word "hello" we run a quantum circuit 5 times. On a classical computer this would require `5*8=40` iterations, with 8 indices in the array to search across, multiplied by 5 letters in our target phrase. If we're using a hash to store the letter indices, we can reduce the time it would take to `8 + 5*1` iterations (8 iterations to move across the array and store the letters in the hash, plus 5 cycles to lookup each letter in the hash, with each lookup being a constant value of 1). However, on a quantum computer this would only require `5*1=5` CPU cycles - a single iteration for initializing and executing the quantum circuit for each letter in our target phrase.
 
 ## How many qubits are needed?
 
