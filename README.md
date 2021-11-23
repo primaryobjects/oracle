@@ -95,6 +95,23 @@ formula = ClassicalFunction(logic)
 fc = formula.synth()
 ```
 
+This generates the following quantum circuit for the above example.
+
+```text
+(not x1 and not x2 and not x3) or (x1 and x2 and not x3)
+
+q_0: ──■───────
+       │
+q_1: ──┼────o──
+       │    │
+q_2: ──o────o──
+     ┌─┴─┐┌─┴─┐
+q_3: ┤ X ├┤ X ├
+     └───┘└───┘
+```
+
+We then insert this quantum circuit oracle into our parent quantum circuit program to complete Grover's algorithm and run the application.
+
 Let's take a quick look at how we map qubits to indices within the array.
 
 ## Mapping qubits to letters
