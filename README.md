@@ -133,6 +133,8 @@ etc.
 
 ## Output
 
+Here is an example of the program running, using the target word "hello".
+
 ```text
 3 qubits, 8 possibilites
 Using random letters:
