@@ -202,7 +202,9 @@ It sure does *(on the simulator!)*.
 
 Random letters:
 ['h', ' ', 'l', 'w', 'o', 'a', ' ', 'l', 't', 's', '!', 'o', ' ', 'l', 'y', 'h', 'l', 'd', 'r', 's', ' ', 'l', 'r', 'e', 'l', 'e', 'c', ' ', 'i', 'o', 'o', 'i']
+
 Final result from the quantum circuit:
+
 h (at index 15 [01111])
 e (at index 25 [11001])
 l (at index 2 [00010])
