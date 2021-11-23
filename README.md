@@ -16,7 +16,7 @@ On a quantum computer, we can leverage Grover's search algorithm in order to loc
 
 On a classical computer, the time complexity for searching through an unordered list of elements would take O(n). That is, the worst case would be to iterate through the entire array, if the last element in the array is the target letter.
 
-By contrast, a quantum computer using Grover's algorithm can locate the target element in O(log(n)). It does this by representing each bit in the length of the array with a qubit. For example, for a random array of length 8, we can represent this on a quantum computer using 3 qubits which gives us 2^3=8 possible combinations.
+By contrast, a quantum computer using Grover's algorithm can locate the target element in O(sqrt(n)). It does this by representing each bit in the length of the array with a qubit. For example, for a random array of length 8, we can represent this on a quantum computer using 3 qubits which gives us 2^3=8 possible combinations.
 
 ## An Example
 
