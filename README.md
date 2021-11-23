@@ -75,6 +75,26 @@ An oracle can consist of logic that determines a solution state, given the value
 
 The oracle used in this tutorial is a very simplistic one. Rather than using a logical set of clauses, we'll have the oracle simply return the target index for the desired letter. The quantum circuit will still execute a full search and use the oracle to determine which combination of qubits is a valid solution. This allows us to more easily see how to construct an oracle for a quantum computer.
 
+### Creating the clauses for the Oracle
+
+As a quantum computing Oracle requires some means of determining a valid solution of qubit values, we need a way to represent our target indices for each letter. The way that we can do this is to create a logical function for the correct qubit values and provide this function to the oracle.
+
+*Keep in mind, typically an Oracle does not know ahead-of-time what the correct solution is, rather it formulates the solution from given clauses and identifies the qubit solution values. However, for this example, we are more or less directly providing the Oracle with the solution via a logical function (to server as our clause) in order to demonstrate a simple example of searching for elements in an unordered list.*
+
+To [create](https://github.com/primaryobjects/quantum-abc/blob/master/app.py#L29) the logical function, we first identify the target element index in the array. Let's suppose the letter 'l' is found at index `0 (000)` and `3 (011)`. We formulate a logical clause using the following Python function structure:
+
+```
+(not x1 and not x2 and not x3) or (x1 and x2 and not x3)
+```
+
+We pass the clause into our Oracle [builder](https://github.com/primaryobjects/quantum-abc/blob/master/lib/oracle.py#L4), which returns a QuantumCircuit. Specifically, we leverage the Qiskit method [ClassicalFunction](https://qiskit.org/documentation/apidoc/classicalfunction.html) and [synth](https://qiskit.org/documentation/stubs/qiskit.circuit.classicalfunction.ClassicalFunction.synth.html) method in order to automatically generate the quantum circuit from the Python function.
+
+```python
+# Convert the logic to a quantum circuit.
+formula = ClassicalFunction(logic)
+fc = formula.synth()
+```
+
 Let's take a quick look at how we map qubits to indices within the array.
 
 ## Mapping qubits to letters
