@@ -109,7 +109,7 @@ For 15 letters, `ceil(log(16, 2)) = 4` qubits (`1111 = 0 to 15 = 16` possible va
 
 For 16 letters, `ceil(log(17, 2)) = 5` qubits (`11111 = 0 to 31 = 32` possible values)
 
-For 33 letters, `ceil(log(33, 2)) = 6` qubits
+For 33 letters, `ceil(log(33, 2)) = 6` qubits (`111111 = 0 to 63 = 64` possible values)
 
 etc.
 
