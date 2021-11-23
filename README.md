@@ -12,7 +12,7 @@ The idea is similar to the traditional [ransom](https://leetcode.com/problems/ra
 
 ## Why would you use a quantum computer for this?
 
-On a quantum computer, we can leverage Grover's search algorithm in order to locate the target letter indices within the random array and select them for printing next in the sentence. This provides an amazing polynomial reduction in time complexity to find the solution!
+On a quantum computer, we can leverage [Grover's search](https://en.wikipedia.org/wiki/Grover%27s_algorithm) algorithm in order to locate the target letter indices within the random array and select them for printing next in the sentence. This provides a [quadratic](https://www.quora.com/When-people-say-a-quantum-computer-gains-a-quadratic-speedup-for-search-algorithms-does-that-mean-the-complexity-is-square-rooted-i-e-sqrt-n) speedup in time complexity to find the solution!
 
 On a classical computer, the time complexity for searching through an unordered list of elements would take O(n). That is, the worst case would be to iterate through the entire array, if the last element in the array is the target letter.
 
