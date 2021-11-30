@@ -2,7 +2,7 @@ import random
 from math import ceil, floor, log
 from lib.util import execute, generate
 from lib.grover import grover
-from lib.oracle import oracle
+from lib.oracles.logic import oracle
 
 def init(target, n):
     # Initialize an array of random letters, including the target ones in the string.
