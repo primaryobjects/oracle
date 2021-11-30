@@ -3,6 +3,7 @@ from lib.grover import grover
 from lib.oracles.even import oracle
 
 def main():
+    # Find all even numbers in a given range.
     execute.provider = None
 
     # Generate the quantum circuit.
