@@ -1,6 +1,4 @@
-import random
-from math import ceil, log
-from lib.util import execute
+from lib.util import random_number, num_qubits, execute
 from lib.grover import grover
 from lib.oracles.numeric import oracle
 
@@ -47,10 +45,10 @@ def main():
     input('Please ask me a yes/no question and I will predict your future [PRESS ANY KEY] ...')
 
     # Determine the number of qubits required.
-    n = ceil(log(len(predictions), 2))
+    n = num_qubits(len(predictions))
 
-    # Select a random prediction.
-    r = random.choice(range(len(predictions)))
+    # Generate a random number using a quantum circuit.
+    r = random_number(0, len(predictions))
 
     print()
     print('Selected random index ' + str(r))

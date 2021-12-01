@@ -2,15 +2,56 @@ import ast
 import random
 import string
 import time
+from math import ceil, log
 from configparser import RawConfigParser
-from qiskit import qiskit, Aer, IBMQ
+from qiskit import qiskit, Aer, IBMQ, QuantumCircuit
 
-def generate(n):
+def random_letters(n):
     # Generate an array of random letters.
     letters = []
     for i in range(n):
         letters.append(random.choice(string.ascii_letters))
     return letters
+
+def random_number(minimum, maximum):
+    # Uses a quantum circuit to generate a random number from minimum (inclusive) to maximum (exclusive).
+    # Determine the number of qubits required.
+    n = num_qubits(maximum-1)
+
+    # Create a quantum circuit with enough qubits for the max value.
+    qc = QuantumCircuit(n)
+
+    # Place all qubits into superposition.
+    qc.h(range(n))
+
+    # Measure the result.
+    qc.measure_all()
+
+    # Continue executing the circuit until we obtain a value within range.
+    r = -1
+    count = 0
+    max_count = 10
+    while (r < minimum or r >= maximum) and count < max_count:
+        # Execute the circuit.
+        result = execute(qc)
+
+        # Get the resulting hit counts.
+        counts = result.get_counts()
+
+        # Find the most frequent hit count.
+        key = max(counts, key=counts.get)
+
+        # Since the quantum computer returns a binary string (one bit for each qubit), we need to convert it to an integer.
+        r = int(key, 2)
+
+        # Increment the count before we break.
+        count = count + 1
+
+    return r
+
+def num_qubits(i):
+    # Returns the number of qubits needed to represent the value i.
+    return ceil(log(i, 2))
 
 def execute(qc):
     # Setup the API key for the real quantum computer.

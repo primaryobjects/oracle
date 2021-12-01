@@ -1,12 +1,12 @@
 import random
-from math import ceil, floor, log
-from lib.util import execute, generate
+from math import floor, log
+from lib.util import execute, num_qubits, random_letters
 from lib.grover import grover
 from lib.oracles.logic import oracle
 
 def init(target, n):
     # Initialize an array of random letters, including the target ones in the string.
-    arr = generate(n)
+    arr = random_letters(n)
 
     # Store used indices so that we don't overwrite target letters.
     indices = [-1]
@@ -87,7 +87,7 @@ def main(phrase):
     execute.provider = None
 
     # Calculate the number of qubits needed to represent the number of letters in the target.
-    qubits = ceil(log(len(phrase), 2))
+    qubits = num_qubits(len(phrase))
 
     bits = 2 ** qubits
     arr = init(phrase, bits)
