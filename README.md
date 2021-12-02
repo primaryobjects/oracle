@@ -1,6 +1,8 @@
-# Quantum Computing ABC
+# Oracle
 
-A quantum computing program that can print "Hello World!"
+A quantum computing demo using various oracles in Grover's [algorithm](https://qiskit.org/textbook/ch-algorithms/grover.html).
+
+Here's an example for printing "Hello World"!
 
 ```text
 Random letters:
@@ -17,11 +19,18 @@ o (at index 3 [011])
 
 ## What is it?
 
-Quantum Computing ABC is a tutorial example of writing a quantum computing program in Qiskit that searches through a random array of letters in order to find each letter in sequence for a target sentence, such as "Hello World!".
+Oracle is a tutorial example of writing a quantum computing program in Qiskit that searches through a random array of letters in order to find each letter in sequence for a target sentence, such as "Hello World!".
 
 The idea is similar to the traditional [ransom](https://leetcode.com/problems/ransom-note/) [note](https://dev.to/teekay/algorithms-problem-solving-ransom-note-2f5f) [problem](https://medium.com/@harycane/ransom-note-af09b54904d0). You're given a magazine of randomly cut out letters. The letters are strewn across a table in a random fashion. Your task is to find enough letters from the table in order to paste them together to produce the phrase "hello world".
 
 *Given two stings ransomNote and magazine, return true if ransomNote can be constructed from magazine and false otherwise. Each letter in magazine can only be used once in ransomNote.*
+
+#### Other Examples
+
+- [Hello World](hello.py)
+- [Even Numbers](even.py)
+- [Odd Numbers](odd.py)
+- [Magic Eight Ball](magicball.py)
 
 ## Why would you use a quantum computer for this?
 
@@ -33,7 +42,7 @@ By contrast, a quantum computer using Grover's [algorithm](https://en.wikipedia.
 
 While the example in this tutorial of selecting letters from an array of random elements is simplistic, it nevertheless demonstrates the speed-up in time complexity for searching and locating the desired elements.
 
-## An Example
+## Hello World
 
 Below is an example of a random array being searched to produce the word "hello".
 
