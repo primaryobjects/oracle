@@ -7,7 +7,7 @@ def main():
     execute.provider = None
 
     # Generate the quantum circuit.
-    qc = grover(oracle, None, 4)
+    qc = grover(oracle, None, 3)
     print(qc.draw())
 
     # Execute the quantum circuit.

@@ -5,10 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "helloq",
+            "name": "hello",
             "type": "python",
             "request": "launch",
-            "program": "app.py",
+            "program": "hello.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "even",
+            "type": "python",
+            "request": "launch",
+            "program": "even.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "odd",
+            "type": "python",
+            "request": "launch",
+            "program": "odd.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "magic-eight-ball",
+            "type": "python",
+            "request": "launch",
+            "program": "magicball.py",
             "console": "integratedTerminal"
         }
     ]
