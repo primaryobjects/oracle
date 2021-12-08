@@ -484,6 +484,41 @@ The result of measuring for odd numbers results in the following output below.
 {'100': 242, '000': 271, '010': 260, '110': 251}
 ```
 
+## Magic Eight Ball
+
+We can have a little fun in the oracle applications of a controlled Z-gate oracle. As we've seen above, we now know how to create an oracle for detecting any value from the qubits. We can detect single values using a controlled Z-Gate with X-Gates applied to the qubits (bits) that should have a value of 1, and we can detect multiple values by strategically placing our Z-gate controls, as shown with even and odd numbers.
+
+Since we know how to detect a specific value, let's create a Magic Eight Ball.
+
+A magic eight ball is a gaming device or toy that lets a player ask a yes/no question, shake the ball in their hands, and a resulting [answer](https://github.com/primaryobjects/oracle/blob/master/magicball.py) is shown on the ball.
+
+If we use an array of answers as strings for each possible result, we can represent the index to each answer in binary, and thus, use qubits to represent the target value. We can then utilize Grover's algorithm to find the target index which we then use to return the response.
+
+To construct an oracle for this application, we only need to be able to find a specific value. That is, we need to flip the qubits that represent the bits in the value that should be 0 and keep the qubits as-is that should represent a value of 1.
+
+In the above examples for even and odd numbers, we knew exactly which qubit to flip (qubit 0). This time, we need to flip [specific](https://github.com/primaryobjects/oracle/blob/master/lib/oracles/numeric.py) qubits, based upon the target value. This can be done by converting the value from base-10 to a binary string and then flipping the resulting qubits accordingly to their corresponding bit values.
+
+```python
+# Flip each qubit to zero to match the bits in the target number i.
+for j in range(len(bin_str)):
+     if bin_str[j] == '0':
+          qc.x(j)
+
+qc.append(ZGate().control(n), range(n+1))
+
+
+# Unflip each qubit to zero to match the bits in the target number i.
+for j in range(len(bin_str)):
+     if bin_str[j] == '0':
+          qc.x(j)
+```
+
+Just as we've done earlier, we're flipping the qubits, applying the controlled Z-Gate, and finally unflipping to restore the circuit.
+
+Note, while it may be trivial to choose a random answer from the array of strings upon which we obviously know the index, encoding the index as qubits and then asking Grover's algorithm to find that index again for us, this example demonstrates how to use a controlled Z-Gate for this purpose.
+
+Future applications should take this idea further to craft more unique and robust oracles for Grover's algorithm where the answer is not immediately known, but is rather determined through a set of clauses.
+
 ## License
 
 MIT
