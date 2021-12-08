@@ -326,7 +326,7 @@ q_1: ──■─────
        │
 q_2: ──■─────
        │
-q_3: ──■─────
+q_3: ──Z─────
 ```
 
 Similarly, to find the state `1011`, we can insert X-Gate (not gates) into our circuit. Since `HXH=Z` and `HZH=X`, we can take advantage of the quantum rules to create a multi-controlled phase circuit from a series of X-gates.
@@ -355,7 +355,7 @@ q_2: ┤ X ├─■─┤ X ├
      └───┘ │ └───┘
 q_3: ──────■──────
            │
-q_4: ──────■──────
+q_4: ──────Z──────
 ```
 
 Notice how we've applied an X-Gate around the Z-Gate control for qubit 2 (*note, we count qubits from right-to-left using Qiskit standard format*).
@@ -387,15 +387,33 @@ The example for [odd numbers](odd.py) demonstrates a simple example of creating 
 
 We can see that the odd numbers all contain a `1` for the right-most digit (in binary). Therefore, we can create an oracle for Grover's algorithm to find all measurements of qubits that result in a `1` for the right-most digit by simply applying a controlled Z-Gate from the right-most qubit to all other qubits.
 
-The oracle to find odd numbers is shown below.
+The oracle to find odd numbers can be created in Qiskit with the following code.
 
+```python
+qc = QuantumCircuit(4)
+qc.append(ZGate().control(1), [0,1])
+qc.append(ZGate().control(1), [0,2])
+qc.append(ZGate().control(1), [0,3])
+```
+
+Alternatively, we can use the following shortcut syntax.
+
+```python
+n = 4
+qc.append(ZGate().control(1), [0,range(1,n+1)])
+```
+
+This results in the following oracle.
+
+```
 q_0: ─■──■──■─
       │  │  │
-q_1: ─■──┼──┼─
+q_1: ─Z──┼──┼─
          │  │
-q_2: ────■──┼─
+q_2: ────Z──┼─
             │
-q_3: ───────■─
+q_3: ───────Z─
+```
 
 Notice, we've used a controlled Z-Gate from qubit 0 to each of the other qubits. When qubit 0 has a value of 1, the Z-Gate is applied to each of the other qubits, setting the matching phase for Grover's algorithm.
 
