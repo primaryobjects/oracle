@@ -499,13 +499,20 @@ To construct an oracle for this application, we only need to be able to find a s
 In the above examples for even and odd numbers, we knew exactly which qubit to flip (qubit 0). This time, we need to flip [specific](https://github.com/primaryobjects/oracle/blob/master/lib/oracles/numeric.py) qubits, based upon the target value. This can be done by converting the value from base-10 to a binary string and then flipping the resulting qubits accordingly to their corresponding bit values.
 
 ```python
+# Choose a (random) target answer.
+i = 6
+
+# Convert i to a binary string, pad with zeros, and reverse for qiskit.
+bin_str = bin(i)[2:]
+bin_str = bin_str.zfill(n)
+bin_str = bin_str[::-1]
+
 # Flip each qubit to zero to match the bits in the target number i.
 for j in range(len(bin_str)):
      if bin_str[j] == '0':
           qc.x(j)
 
 qc.append(ZGate().control(n), range(n+1))
-
 
 # Unflip each qubit to zero to match the bits in the target number i.
 for j in range(len(bin_str)):
