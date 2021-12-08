@@ -522,7 +522,53 @@ for j in range(len(bin_str)):
 
 Just as we've done earlier, we're flipping the qubits, applying the controlled Z-Gate, and finally unflipping to restore the circuit.
 
-Note, while it may be trivial to choose a random answer from the array of strings upon which we obviously know the index, encoding the index as qubits and then asking Grover's algorithm to find that index again for us, this example demonstrates how to use a controlled Z-Gate for this purpose.
+### Output
+
+The magic eight ball example results in the following output.
+
+```text
+Please ask me a yes/no question and I will predict your future [PRESS ANY KEY] ...
+
+Selected random index 5
+Encoding 00101
+
+q_0: ──────■──────
+     ┌───┐ │ ┌───┐
+q_1: ┤ X ├─■─┤ X ├
+     └───┘ │ └───┘
+q_2: ──────■──────
+     ┌───┐ │ ┌───┐
+q_3: ┤ X ├─■─┤ X ├
+     ├───┤ │ ├───┤
+q_4: ┤ X ├─■─┤ X ├
+     └───┘ │ └───┘
+q_5: ──────■──────
+
+       ┌───┐      ░ ┌─────────┐ ░ ┌───────────┐ ░      ┌─┐
+var_0: ┤ H ├──────░─┤0        ├─░─┤0          ├─░──────┤M├─────────────────
+       ├───┤      ░ │         │ ░ │           │ ░      └╥┘┌─┐
+var_1: ┤ H ├──────░─┤1        ├─░─┤1          ├─░───────╫─┤M├──────────────
+       ├───┤      ░ │         │ ░ │           │ ░       ║ └╥┘┌─┐
+var_2: ┤ H ├──────░─┤2        ├─░─┤2 diffuser ├─░───────╫──╫─┤M├───────────
+       ├───┤      ░ │  oracle │ ░ │           │ ░       ║  ║ └╥┘┌─┐
+var_3: ┤ H ├──────░─┤3        ├─░─┤3          ├─░───────╫──╫──╫─┤M├────────
+       ├───┤      ░ │         │ ░ │           │ ░       ║  ║  ║ └╥┘┌─┐
+var_4: ┤ H ├──────░─┤4        ├─░─┤4          ├─░───────╫──╫──╫──╫─┤M├─────
+       ├───┤┌───┐ ░ │         │ ░ └───────────┘ ░ ┌───┐ ║  ║  ║  ║ └╥┘┌───┐
+out_0: ┤ X ├┤ H ├─░─┤5        ├─░───────────────░─┤ H ├─╫──╫──╫──╫──╫─┤ X ├
+       └───┘└───┘ ░ └─────────┘ ░               ░ └───┘ ║  ║  ║  ║  ║ └───┘
+  c: 5/═════════════════════════════════════════════════╩══╩══╩══╩══╩══════
+                                                        0  1  2  3  4
+{'01110': 26, '11010': 29, '11001': 26, '01111': 27, '00000': 34, '01011': 27, '00010': 25, '10011': 27, '10001': 25, '01010': 34, '00111': 31, '01100': 31, '00101': 165, '01001': 19, '10000': 27, '10101': 32, '11100': 32, '11110': 25, '00011': 16, '00100': 31, '00110': 36, '11011': 34, '01000': 28, '10100': 32, '11101': 29, '10110': 25, '10010': 29, '11111': 28, '11000': 24, '10111': 24, '01101': 25, '00001': 21}
+
+Result: 5 (00101)
+
+As I see it, yes.
+```
+
+### Notes on Included Oracles
+
+This repository contains very simple oracles for Grover's algorithm, some of which already know the target value and encode it within the oracle circuit. While it may be trivial to choose a random answer from the array of strings upon which we obviously know the index, encoding the index as qubits, and then asking Grover's algorithm to find that index again for us, this example demonstrates how to use a controlled Z-Gate for this purpose.
 
 Future applications should take this idea further to craft more unique and robust oracles for Grover's algorithm where the answer is not immediately known, but is rather determined through a set of clauses.
 
