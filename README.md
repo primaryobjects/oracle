@@ -304,3 +304,173 @@ o (at index 29 [11101])
 l (at index 21 [10101])
 ! (at index 10 [01010])
 ```
+
+## Other Examples
+
+Included in this project are other examples that demonstrate how to create an oracle for an implementation of Grover's algorithm.
+
+These additional examples take advantage of the idea of using a controlled Z-Gate for setting the correct phase for desired measured values using Grover's algorithm. The key is to apply the Z-Gate to the qubits when the state of each qubit's value is the target.
+
+## Using the Z-Gate in an Oracle for Grover's Algorithm
+
+One of the easiest ways to construct an oracle for Grover's algorithm is to simply flip the phase of a single amplitude of the quantum circuit. This sets the detection for Grover's algorithm to identify the target result.
+
+This can be done by applying a controlled Z-Gate across each qubit in the circuit. It doesn't matter which qubit ends up being the target versus control for the Z-Gate, so long as all qubits are included in the Z-Gate process.
+
+For example, to instruct Grover's algorithm to find the state `1111`, we could use the following oracle shown below.
+
+```
+q_0: ──■─────
+       │
+q_1: ──■─────
+       │
+q_2: ──■─────
+       │
+q_3: ──■─────
+```
+
+Similarly, to find the state `1011`, we can insert X-Gate (not gates) into our circuit. Since `HXH=Z` and `HZH=X`, we can take advantage of the quantum rules to create a multi-controlled phase circuit from a series of X-gates.
+
+An example of finding the state `1011` can be constructed with the following code below.
+
+```python
+# Create a quantum circuit with one addition qubit for output.
+qc = QuantumCircuit(5)
+# Flip qubit 2 to detect a 0.
+qc.x(2)
+# Apply a controlled Z-Gate across each of the qubits. The target is simply the last qubit (although it does not matter which qubit is the target).
+qc.append(ZGate().control(n), range(n+1))
+# Unflip qubit 2 to restore the circuit.
+qc.x(2)
+```
+
+The above code results in the following oracle.
+
+```
+q_0: ──────■──────
+           │
+q_1: ──────■──────
+     ┌───┐ │ ┌───┐
+q_2: ┤ X ├─■─┤ X ├
+     └───┘ │ └───┘
+q_3: ──────■──────
+           │
+q_4: ──────■──────
+```
+
+Notice how we've applied an X-Gate around the Z-Gate control for qubit 2 (*note, we count qubits from right-to-left using Qiskit standard format*).
+
+Running Grover's algorithm with the above oracle results in the following output.
+
+```
+{'1101': 48, '0001': 47, '1100': 52, '0101': 40, '0100': 49, '0110': 46, '1110': 56, '0010': 63, '1000': 61, '1011': 264, '1111': 46, '1010': 54, '1001': 51, '0000': 49, '0111': 58, '0011': 40}
+```
+
+Notice the number of occurrences for our target value `1011` has the highest count of `264`. Let's see howto apply this concept for actual applications, including detecting odd numbers, even numbers, and specific numeric values!
+
+## Odd Numbers
+
+The example for [odd numbers](odd.py) demonstrates a simple example of creating an oracle that finds all odd numbers in a given range of qubits. For example, when considering 3 qubits, we can create `2^3=8` different values. This includes the numbers 0-7, as shown below in binary form from each qubit.
+
+**3 qubits**
+
+```
+000 = 0
+001 = 1
+010 = 2
+011 = 3
+100 = 4
+101 = 5
+110 = 6
+111 = 7
+```
+
+We can see that the odd numbers all contain a `1` for the right-most digit (in binary). Therefore, we can create an oracle for Grover's algorithm to find all measurements of qubits that result in a `1` for the right-most digit by simply applying a controlled Z-Gate from the right-most qubit to all other qubits.
+
+The oracle to find odd numbers is shown below.
+
+q_0: ─■──■──■─
+      │  │  │
+q_1: ─■──┼──┼─
+         │  │
+q_2: ────■──┼─
+            │
+q_3: ───────■─
+
+Notice, we've used a controlled Z-Gate from qubit 0 to each of the other qubits. When qubit 0 has a value of 1, the Z-Gate is applied to each of the other qubits, setting the matching phase for Grover's algorithm.
+
+The complete circuit is shown below.
+
+```
+       ┌───┐      ░ ┌─────────┐ ░ ┌───────────┐ ░      ┌─┐
+var_0: ┤ H ├──────░─┤0        ├─░─┤0          ├─░──────┤M├───────────
+       ├───┤      ░ │         │ ░ │           │ ░      └╥┘┌─┐
+var_1: ┤ H ├──────░─┤1        ├─░─┤1 diffuser ├─░───────╫─┤M├────────
+       ├───┤      ░ │  oracle │ ░ │           │ ░       ║ └╥┘┌─┐
+var_2: ┤ H ├──────░─┤2        ├─░─┤2          ├─░───────╫──╫─┤M├─────
+       ├───┤┌───┐ ░ │         │ ░ └───────────┘ ░ ┌───┐ ║  ║ └╥┘┌───┐
+out_0: ┤ X ├┤ H ├─░─┤3        ├─░───────────────░─┤ H ├─╫──╫──╫─┤ X ├
+       └───┘└───┘ ░ └─────────┘ ░               ░ └───┘ ║  ║  ║ └───┘
+  c: 3/═════════════════════════════════════════════════╩══╩══╩══════
+                                                        0  1  2
+```
+
+### Output
+
+The result of applying Grover's algorithm with the odd numbers oracle is shown below.
+
+```
+{'111': 254, '001': 232, '101': 275, '011': 263}
+```
+
+The above result shows the measurements spread equally across each of the odd numbers within the range of 3 qubits.
+
+We can likewise extrapolate the result out to 5 qubits, resulting in the following output below.
+
+```
+{'01101': 68, '01001': 48, '10101': 69, '10111': 47, '00001': 77, '00101': 71, '01011': 68, '10011': 56, '01111': 65, '10001': 72, '11011': 71, '00111': 55, '00011': 66, '11101': 63, '11001': 61, '11111': 67}
+```
+
+The above result also shows measurements for all possible odd numbers within a range of 5 qubits.
+
+## Even Numbers
+
+Similar to the example of odd numbers, we can apply the same process to create an oracle for measuring even numbers with Grover's algorithm.
+
+Whereas with odd numbers we simply applied a Z-Gate from qubit 0 to all other qubits in order to set the measurement phase for Grover's algorithm when qubit 0 has a state of 1, this time we want to detect when qubit 0 has a state of 0.
+
+That is, for 3-digit binary even numbers, we want to detect all values where the right-most bit is a 0.
+
+We can do this by using the same controlled Z-Gate from qubit 0 to each of the other qubits. However, instead of measuring for a value of 1 on that qubit, we want to measure for a value of 0. To do this, we can simply flip the qubit before applying the controlled Z-Gate.
+
+Note, we also have to "unflip" the first qubit back to its original state, in order to preserve the circuit for Grover's algorithm. The oracle is shown below.
+
+```
+     ┌───┐         ┌───┐
+q_0: ┤ X ├─■──■──■─┤ X ├
+     └───┘ │  │  │ └───┘
+q_1: ──────■──┼──┼──────
+              │  │
+q_2: ─────────■──┼──────
+                 │
+q_3: ────────────■──────
+```
+
+The above oracle for measuring even numbers is nearly the exact same as that for measuring odd numbers, with the difference being the X-Gate applied to the first qubit.
+
+### Output
+
+The result of measuring for odd numbers results in the following output below.
+
+```
+{'100': 242, '000': 271, '010': 260, '110': 251}
+```
+
+## License
+
+MIT
+
+## Author
+
+Kory Becker
+http://www.primaryobjects.com/kory-becker
