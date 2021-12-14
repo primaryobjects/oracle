@@ -2,8 +2,14 @@ from qiskit import QuantumCircuit
 from qiskit.circuit.library.standard_gates.z import ZGate
 
 def oracle(i, n):
-    # Returns a quantum circuit that recognizes a single number i.
-    # Upon starting, all qubits are assumed to have a value of 1.
+    '''
+    Returns a quantum circuit that recognizes a single number i.
+    Upon starting, all qubits are assumed to have a value of 1.
+    Parameters:
+    i: the target value to be recognized, an integer between 0 and 2^n-1.
+    n: the number of qubits in the circuit.
+    '''
+
     # We use a circuit of size n+1 to include an output qubit.
     qc = QuantumCircuit(n+1)
 

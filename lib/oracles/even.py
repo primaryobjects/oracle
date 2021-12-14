@@ -2,8 +2,14 @@ from qiskit import QuantumCircuit
 from qiskit.circuit.library.standard_gates.z import ZGate
 
 def oracle(logic, n):
-    # Returns a quantum circuit that recognizes even numbers. We do this by checking if qubit 0 equals 0 (even).
-    # Upon starting, all qubits are assumed to have a value of 1. We only need to consider qubit 0, the other qubits may be ignored.
+    '''
+    Returns a quantum circuit that recognizes even numbers. We do this by checking if qubit 0 equals 0 (even).
+    Upon starting, all qubits are assumed to have a value of 1. We only need to consider qubit 0, the other qubits may be ignored.
+    Parameters:
+    logic: not used (should be None).
+    n: the number of qubits in the circuit.
+    '''
+
     # We use a circuit of size n+1 to include an output qubit.
     qc = QuantumCircuit(n+1)
 
