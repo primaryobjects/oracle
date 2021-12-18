@@ -88,7 +88,7 @@ The oracle used in this tutorial is a very simplistic one. Rather than using a l
 
 As a quantum computing Oracle requires some means of determining a valid solution of qubit values, we need a way to represent our target indices for each letter. The way that we can do this is to create a logical function for the correct qubit values and provide this function to the oracle.
 
-*Keep in mind, typically an Oracle does not know ahead-of-time what the correct solution is, rather it formulates the solution from given clauses and identifies the qubit solution values. However, for this example, we are more or less directly providing the Oracle with the solution via a logical function (to server as our clause) in order to demonstrate a simple example of searching for elements in an unordered list.*
+*Keep in mind, typically an Oracle does not know ahead-of-time what the correct solution is, rather it formulates the solution from given clauses and identifies the qubit solution values. However, for this example, we are more or less directly providing the Oracle with the solution via a logical function (to serve as our clause) in order to demonstrate a simple example of searching for elements in an unordered list.*
 
 To [create](https://github.com/primaryobjects/quantum-abc/blob/master/hello.py#L29) the logical function, we first identify the target element index in the array. Let's suppose the letter 'l' is found at index `0 (000)` and `3 (011)`. We formulate a logical clause using the following Python function structure:
 
