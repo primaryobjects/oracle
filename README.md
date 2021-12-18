@@ -478,7 +478,7 @@ The above oracle for measuring even numbers is nearly the exact same as that for
 
 ### Output
 
-The result of measuring for odd numbers results in the following output below.
+The result of measuring for even numbers, results in the following output below.
 
 ```
 {'100': 242, '000': 271, '010': 260, '110': 251}
