@@ -92,7 +92,7 @@ def main(phrase):
     bits = 2 ** qubits
     arr = init(phrase, bits)
 
-    print(str(qubits) + ' qubits, ' + str(bits) + ' possibilites')
+    print(str(qubits) + ' qubits, ' + str(bits) + ' possibilities')
     print('Using random letters:')
     print(arr)
 
@@ -126,10 +126,11 @@ def main(phrase):
 
         indices.append({'binary': key, 'index': index, 'letter': letter})
 
-    print('Random letters:')
+    print('\nRandom letters:')
     print(arr)
+    print()
 
-    print('Final result from the quantum circuit:')
+    print('Final result from the quantum circuit:\n')
     for i in range(len(indices)):
         letter = arr[indices[i]['index']]
         index = indices[i]['index']
