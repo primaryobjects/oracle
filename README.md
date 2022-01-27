@@ -2,6 +2,8 @@
 
 A quantum computing demo using various oracles in Grover's [algorithm](https://qiskit.org/textbook/ch-algorithms/grover.html).
 
+Read the full article [Quantum Computing Hello World](http://www.primaryobjects.com/2022/01/22/quantum-computing-hello-world/).
+
 Here's an example for printing "Hello World"!
 
 ```text
