@@ -39,6 +39,13 @@
             "request": "launch",
             "program": "emoticon.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Select file",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
         }
-    ]
+	]
 }

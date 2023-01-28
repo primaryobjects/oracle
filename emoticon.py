@@ -15,7 +15,8 @@ from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 #
 emoticons = [
     ';)', # 00111011 00101001
-    '8)' # 00111000 00101001
+    '8)'  # 00111000 00101001
+          #       ^^----- all bits are the same, except for these two.
 ]
 
 def decode_binary_string(s):
@@ -71,7 +72,7 @@ def main():
         # Decode the bits into ASCII characters (8 bits [1 byte] per character).
         result = decode_binary_string(key)
         results += result
-    
+
         # Print the output, random result of emoticon1 or emotion2!
         if i > 0 and i % 80 == 0:
             print(''.join(results))
